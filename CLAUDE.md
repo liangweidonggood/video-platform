@@ -116,5 +116,3 @@ pnpm test              # 运行测试
 - 前端：`pnpm dev`（端口 5173）
 
 ## 代码质量
-
-- 提交前执行 `/code-simplifier` 分析最近修改的代码

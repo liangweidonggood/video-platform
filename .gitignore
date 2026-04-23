@@ -1,0 +1,38 @@
+# ============================
+# Backend - Gradle
+# ============================
+backend/.gradle/
+backend/build/
+# ============================
+# Frontend - Vite/Node
+# ============================
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+frontend/output/
+frontend/tsconfig.tsbuildinfo
+
+# ============================
+# IDE
+# ============================
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ============================
+# Logs
+# ============================
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# ============================
+# Playwright
+# ============================
+.playwright/
+.playwright-cli/
+

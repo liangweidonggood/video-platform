@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+media:
+  server:
+    http-port: 7788
+    rtsp-port: 554
+    rtmp-port: 1935
+    id: video-platform
+  thread-num: 4
+  log-level: 3

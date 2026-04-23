@@ -24,10 +24,18 @@
 video-platform/
 ├── backend/                    # Spring Boot 后端项目
 │   ├── src/main/java/com/hxl/video/
-│   │   ├── camera/             # 摄像头协议接入（GB28281/海康SDK/RTSP）
-│   │   ├── zlm/                # ZLM 媒体服务器封装
+│   │   ├── config/             # 配置类（GlobalConfigProperties 等）
+│   │   ├── launch/             # 启动初始化（ApplicationRunner）
+│   │   ├── common/             # 公共包（异常、DTO、工具）
+│   │   ├── module/             # 业务模块（device/user 等，含 controller/service/model/mapper）
+│   │   ├── media/               # 媒体服务层（ZLM 封装，server/stream/mapper）
+│   │   ├── api/                 # 对外接口（openapi/）
 │   │   └── VideoPlatformApplication.java
-│   └── src/main/resources/application.yml
+│   └── src/main/resources/
+│       ├── application.yml     # 公共配置
+│       ├── application-dev.yml # 开发环境
+│       ├── application-test.yml # 测试环境
+│       └── application-prod.yml # 生产环境
 │
 └── frontend/                    # React 前端项目
     ├── src/
@@ -59,8 +67,35 @@ pnpm test              # 运行测试
 
 | 模块 | 用途 |
 |------|------|
-| `camera/` | 摄像头协议接入层，管理 GB28281、海康 SDK、RTSP 等多协议 |
-| `zlm/` | ZLM 媒体服务器封装，处理流媒体转发和分发 |
+| `config/` | 配置类，GlobalConfigProperties 统一管理所有配置属性 |
+| `launch/` | 启动初始化，ApplicationRunner 实现 |
+| `common/` | 公共基础，异常、DTO、工具类 |
+| `module/` | 业务模块，含 device/user 等，下分 controller/service/model/mapper |
+| `media/` | ZLM 媒体服务封装，含 server/stream/mapper |
+| `api/` | 对外开放接口，独立于 module 体系 |
+
+## ZLM 媒体服务器
+
+| 端口 | 用途 |
+|------|------|
+| 7788 | HTTP 媒体端口 |
+| 554  | RTSP |
+| 1935 | RTMP |
+
+- 初始化链路：`ZlmServerLauncher`（ApplicationRunner）→ `MediaServerManager.initEnvironment()` → 各协议 `start*Server()`
+- 配置通过 `GlobalConfigProperties.getMediaProperties()` 访问
+
+## 配置管理规范
+
+- 所有 `@ConfigurationProperties` 类通过 `GlobalConfigProperties` 统一入口访问
+- `MediaProperties` 是 Java 21 record，accessor 不带 `get` 前缀（如 `mediaProperties.server().httpPort()`）
+- YAML 配置按环境拆分：`application-dev.yml`、`application-test.yml`、`application-prod.yml`
+- `server.port` 等环境相关配置放在各环境文件中，不在 `application.yml` 中
+
+## 依赖说明
+
+- ZLM4J（`com.aizuda:zlm4j:1.9.1`）是 JNI 封装，native libs（mk_api.dll 等）已打包在 jar 中
+- 不需要单独安装 ZLM Server，嵌入式加载
 
 ## 约定
 

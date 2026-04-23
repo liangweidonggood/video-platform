@@ -1,9 +1,8 @@
-server:
-  port: 8080
-
 spring:
   application:
     name: video-platform
+  profiles:
+    active: dev
 
 management:
   endpoints:

@@ -22,4 +22,5 @@ dependencies {
     implementation("com.aizuda:zlm4j:1.9.1")
 
     compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
 }

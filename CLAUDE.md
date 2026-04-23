@@ -97,8 +97,9 @@ pnpm test              # 运行测试
 - ZLM4J（`com.aizuda:zlm4j:1.9.1`）是 JNI 封装，native libs（mk_api.dll 等）已打包在 jar 中
 - 不需要单独安装 ZLM Server，嵌入式加载
 
-## 约定
+## 编码规范
 
+- **禁止行尾注释**：`config.log_mask = 3; // 这种` — 会破坏代码可读性，改用行前注释或单独成行的注释块
 - 使用 Kotlin DSL 配置 Gradle（`build.gradle.kts`）
 - 前端包管理器统一使用 pnpm
 - 敏感配置通过 `application-{profile}.yml` 管理（本地配置如 `application-local.yml` 需提交）
